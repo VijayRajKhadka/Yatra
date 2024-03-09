@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MailController;
 use Illuminate\Http\Request;
 use Auth;
 use Validator;
@@ -17,7 +18,7 @@ class AuthController extends Controller
             'email'=> ' required|email',
             'contact'=> 'required',
             'password'=> 'required',
-            'c_password'=>'required|same:password'
+            'confirm_password'=>'required|same:password'
         ]);
 
         if($validator->fails()){
@@ -33,7 +34,6 @@ class AuthController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
 
-        
 
         $response = [
             'success' => true,
@@ -41,7 +41,11 @@ class AuthController extends Controller
             'message'=> 'User Registered Successfully'
         ];
 
+        $mailController = new MailController();
+        $mailController->index($input['email'],$input['name']);
+        
         return response()->json($response,200);
+        
     }
 
     public function login(Request $request){
