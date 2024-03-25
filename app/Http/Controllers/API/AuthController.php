@@ -44,6 +44,7 @@ class AuthController extends Controller
             $response = [
                 'success' => true,
                 'data' => $user,
+                'path' => asset('storage/'.$imageName),
                 'message' => 'User Registered Successfully'
             ];
 
