@@ -8,44 +8,56 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
     //
-    public function register(Request $request){
-        $validator = Validator::make($request->all(),[
-            'name'=> 'required',
-            'email'=> ' required|email',
-            'contact'=> 'required',
-            'password'=> 'required',
-            'confirm_password'=>'required|same:password'
-        ]);
+    public function register(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'contact' => 'required',
+                'profile' => 'required|mimes:png,jpg,jpeg,gif',
+                'password' => 'required',
+                'confirm_password' => 'required|same:password',
+                
+            ]);
 
-        if($validator->fails()){
-            $response=[
-                'success' => false,
-                'message' => $validator->errors()
+            if ($validator->fails()) {
+                return response()->json(['success' => false, 'message' => $validator->errors()], 400);
+            }
 
+            $input = $request->all();
+            $input['password'] = bcrypt($input['password']);
+            $imageName = Str::random(32) . "." . $request->file('profile')->getClientOriginalExtension();
+            $input['profile'] = $imageName;
+    
+            $user = User::create($input);
+            
+            Storage::disk('public')->put($imageName, file_get_contents($request->profile));
+
+
+            $response = [
+                'success' => true,
+                'data' => $user,
+                'message' => 'User Registered Successfully'
             ];
-            return response()->json($response,400);
+
+            $mailController = new MailController();
+            $mailController->index($input['email'], $input['name']);
+
+            return response()->json($response, 200);
+        } catch (QueryException $e) {
+            if ($e->errorInfo[1] === 1062) {
+                return response()->json(['success' => false, 'message' => 'User with this email already exists'], 400);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Database error'], 500);
+            }
         }
-
-        $input =$request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
-
-
-        $response = [
-            'success' => true,
-            'data' => $user,
-            'message'=> 'User Registered Successfully'
-        ];
-
-        $mailController = new MailController();
-        $mailController->index($input['email'],$input['name']);
-        
-        return response()->json($response,200);
-        
     }
 
     public function login(Request $request){
