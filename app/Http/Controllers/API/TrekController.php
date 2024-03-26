@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use App\Models\Trek;
+use App\Models\TrekImage;
+
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class TrekController extends Controller
 {
-    public function addTrek(Request $request){
 
+    public function addTrek(Request $request){
+        try{
         $validator = Validator::make($request->all(), [
             'name'=>'required',
             'description'=>'required',
@@ -25,6 +28,8 @@ class TrekController extends Controller
             'emergency_no'=>'required',
             'map_url'=>'required|mimes:png,jpg,jpeg',
             'budgetRange'=>'required',
+            'images' => 'required|array',
+            'images.*' => 'mimes:png,jpg,jpeg',
         ]);
 
         if ($validator->fails()) {
@@ -35,18 +40,37 @@ class TrekController extends Controller
         $imageName = Str::random(32) . "." . $request->file('map_url')->getClientOriginalExtension();
         $input['map_url'] = $imageName;
 
-        $user = Trek::create($input);
-        
+        $newTrek = Trek::create($input);
+        $trekId = $newTrek->id;
+
         Storage::disk('public')->put($imageName, file_get_contents($request->map_url));
 
+        $images = [];
+        foreach($request->file('images') as $image){
+            $trekImageName = Str::random(32) . "." .$image->getClientOriginalExtension();
+            Storage::disk('public')->put($trekImageName, file_get_contents($image));
+            $images[] = [
+                'trek_id' => $trekId,
+                'trek_image_name' => $trekImageName,
+                'trek_image_path' => asset('storage/'.$trekImageName)
+            ];
+        }
+
+        TrekImage::insert($images);
 
         $response = [
             'success' => true,
-            'data' => $user,
+            'data' => $newTrek,
             'path' => asset('storage/'.$imageName),
+            'images'=> $images,
             'message' => 'Trek Added Successfully'
         ];
 
         return response()->json($response, 200);
+    } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Exceded File Upload Size, Reduce Image Size.'], 400);
+       
     }
 }
+}
+
