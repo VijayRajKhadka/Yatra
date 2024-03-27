@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Storage;
 
 class TrekController extends Controller
 {
-
+    public function getTrekDetails(){
+        return Trek::where('approve', 1)->with('trek_image')->get();
+    }
     public function addTrek(Request $request){
         try{
         $validator = Validator::make($request->all(), [
@@ -41,7 +43,7 @@ class TrekController extends Controller
         $input['map_url'] = $imageName;
 
         $newTrek = Trek::create($input);
-        $trekId = $newTrek->id;
+        $trekId = $newTrek->trek_id;
 
         Storage::disk('public')->put($imageName, file_get_contents($request->map_url));
 
@@ -73,4 +75,3 @@ class TrekController extends Controller
     }
 }
 }
-

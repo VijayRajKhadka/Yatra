@@ -29,6 +29,11 @@ class Trek extends Authenticatable
         'map_url',
         'budgetRange',
     ];
+    protected $primaryKey = "trek_id";
+
+    function trek_image(){
+        return $this->hasMany('App\Models\TrekImage','trek_id','trek_id');
+    }
     protected $table = 'trek';
     /**
      * The attributes that should be hidden for serialization.

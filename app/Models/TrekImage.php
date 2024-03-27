@@ -15,6 +15,10 @@ class TrekImage extends Model
         
     ];
     protected $table = 'trek_image';
+
+    
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

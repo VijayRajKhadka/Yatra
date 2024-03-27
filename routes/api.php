@@ -27,4 +27,5 @@ Route::controller(AuthController::class)->group(function(){
 });
 Route::controller(TrekController::class)->group(function(){
     Route::post('addTrek','addTrek');
+    Route::get('trek','getTrekDetails');
 });
