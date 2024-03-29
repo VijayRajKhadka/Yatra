@@ -54,7 +54,7 @@ class TrekController extends Controller
             $images[] = [
                 'trek_id' => $trekId,
                 'trek_image_name' => $trekImageName,
-                'trek_image_path' => asset('storage/'.$trekImageName)
+                'trek_image_path' => asset('storage/app/public/'.$trekImageName)
             ];
         }
 
@@ -63,7 +63,7 @@ class TrekController extends Controller
         $response = [
             'success' => true,
             'data' => $newTrek,
-            'path' => asset('storage/'.$imageName),
+            'path' => asset('storage/app/public/'.$imageName),
             'images'=> $images,
             'message' => 'Trek Added Successfully'
         ];
