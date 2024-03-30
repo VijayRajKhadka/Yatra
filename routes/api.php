@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\TrekController;
+use App\Http\Controllers\API\PlaceController;
 use App\Http\Controllers\API\WatchContentController;
 
 
@@ -33,4 +34,9 @@ Route::controller(TrekController::class)->group(function(){
 Route::controller(WatchContentController::class)->group(function(){
     Route::get('getWatchContent','getWatchContent');
     Route::post('addContent','contentRegister');
+});
+
+Route::controller(PlaceController::class)->group(function(){
+    Route::post('addPlace','addPlace');
+    Route::get('place','getPlaceDetails');
 });
