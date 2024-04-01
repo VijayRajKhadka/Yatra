@@ -30,6 +30,9 @@ Route::controller(AuthController::class)->group(function(){
 Route::controller(TrekController::class)->group(function(){
     Route::post('addTrek','addTrek');
     Route::get('trek','getTrekDetails');
+    Route::get('trekDetails','getTrekByID');
+    Route::post('addTrekFeedback','addTrekFeedback');
+
 });
 Route::controller(WatchContentController::class)->group(function(){
     Route::get('getWatchContent','getWatchContent');
@@ -39,4 +42,6 @@ Route::controller(WatchContentController::class)->group(function(){
 Route::controller(PlaceController::class)->group(function(){
     Route::post('addPlace','addPlace');
     Route::get('place','getPlaceDetails');
+    Route::get('placeDetails','getPlaceByID');
+    Route::post('addPlaceFeedback','addPlaceFeedback');
 });

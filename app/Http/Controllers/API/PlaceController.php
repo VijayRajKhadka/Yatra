@@ -8,30 +8,78 @@ use Auth;
 use Validator;
 use App\Models\Place;
 use App\Models\PlaceImage;
+use App\Models\PlaceFeedback;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
-{
-    public function getPlaceDetails(Request $request){
+{   
+    public function getPlaceByID(Request $request){
+        $trek_id = $request->query('place_id');
+        $trek = Place::with(['place_image', 'place_feedback' => function ($query) {
+                        $query->whereNotNull('review')->with('user:id,name,profile_url');
+                    }])
+                    ->find($trek_id);
     
-    $search = $request->query('search');
-
-   
-    $query = Place::where('approve', 1)->with('place_image');
-
-    if($search) {
-        $query->where(function($query) use ($search) {
-            $query->where('name', 'like', '%'.$search.'%')
-                  ->orWhere('description', 'like', '%'.$search.'%');
-        });
+        if($trek){
+            return response()->json(['success' => true, 'data' => $trek], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Trek not found'], 404);
+        }
     }
 
-    $places = $query->paginate(10); 
-
-    return response()->json(['success' => true, 'data' => $places], 200);
+    public function getPlaceDetails(Request $request){
+        $search = $request->query('search');
+    
+        $query = Place::select(
+            'place.place_id',
+            'place.name',
+            'place.description',
+            'place.location',
+            'place.category',
+            'place.created_at',
+            DB::raw('IFNULL(AVG(pf.rating), 1) as avg_rating')
+        )
+        ->leftJoin('place_feedback as pf', 'place.place_id', '=', 'pf.place_id')
+        ->with('place_image')
+        ->where('place.approve', 1)
+        ->groupBy('place.place_id', 'place.name', 'place.description', 'place.location', 'place.category', 'place.created_at')
+        ->orderByDesc('avg_rating');
+    
+        if($search) {
+            $query->where(function($query) use ($search) {
+                $query->where('name', 'like', '%'.$search.'%')
+                      ->orWhere('description', 'like', '%'.$search.'%');
+            });
+        }
+    
+        $places = $query->paginate(10);
+    
+        return response()->json(['success' => true, 'data' => $places], 200);
     }
+    
+    public function addPlaceFeedback(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'place_id' => 'required',
+            'review' => 'required_without:rating',
+            'rating' => 'required_without:review',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()], 400);
+        }
+        $input = $request->all();
 
+        $newPlaceFeedback = PlaceFeedback::create($input);
+
+        $response = [
+            'success' => true,
+            'data' => $newPlaceFeedback,
+            'message' => 'Place Feedback Added Successfully'
+        ];
+        return response()->json($response, 200);
+    }
 
     public function addPlace(Request $request){
         try{

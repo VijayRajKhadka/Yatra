@@ -25,5 +25,8 @@ class Place extends Model
     function place_image(){
         return $this->hasMany('App\Models\PlaceImage','place_id','place_id');
     }
+    function place_feedback(){
+        return $this->hasMany('App\Models\PlaceFeedback','place_id','place_id');
+    }
     protected $table = 'place';
 }

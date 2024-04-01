@@ -8,17 +8,66 @@ use Auth;
 use Validator;
 use App\Models\Trek;
 use App\Models\TrekImage;
-
+use App\Models\TrekFeedback;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class TrekController extends Controller
-{
+{   
+    public function getTrekByID(Request $request){
+        $trek_id = $request->query('trek_id');
+        $trek = Trek::with(['trek_image', 'trek_feedback' => function ($query) {
+                        $query->whereNotNull('review')->with('user:id,name,profile_url');
+                    }])
+                    ->find($trek_id);
+        if($trek){
+            return response()->json(['success' => true, 'data' => $trek], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Trek not found'], 404);
+        }
+    }
+
+    public function addTrekFeedback(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'trek_id' => 'required',
+            'review' => 'required_without:rating',
+            'rating' => 'required_without:review',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()], 400);
+        }
+        $input = $request->all();
+
+        $newTrekFeedback = TrekFeedback::create($input);
+
+        $response = [
+            'success' => true,
+            'data' => $newTrekFeedback,
+            'message' => 'Trek Feedback Added Successfully'
+        ];
+        return response()->json($response, 200);
+    }
+
     public function getTrekDetails(Request $request){
         $search = $request->query('search');
     
-        $query = Trek::where('approve', 1)->with('trek_image');
-    
+        $query = Trek::select(
+            'trek.trek_id',
+            'trek.name',
+            'trek.location',
+            'trek.category',
+            'trek.approve',
+            'trek.created_at',
+            DB::raw('IFNULL(AVG(tf.rating), 1) as avg_rating')
+            )
+        ->leftJoin('trek_feedback as tf', 'trek.trek_id', '=', 'tf.trek_id')
+        ->with('trek_image')
+        ->where('trek.approve', 1)
+        ->groupBy('trek.trek_id', 'trek.name', 'trek.description', 'trek.location', 'trek.category', 'trek.altitude', 'trek.difficulty', 'trek.no_of_days', 'trek.emergency_no', 'trek.map_url', 'trek.budgetRange', 'trek.approve', 'trek.created_at', 'trek.updated_at')
+        ->orderByDesc('avg_rating');
+
         if($search) {
             $query->where(function($query) use ($search) {
                 $query->where('name', 'like', '%'.$search.'%')
