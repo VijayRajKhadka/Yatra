@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
 class TrekController extends Controller
 {   
     public function getTrekByID(Request $request){
-        $trek_id = $request->query('trek_id');
+        $trek_id = $request->query('trek');
         $trek = Trek::with(['trek_image', 'trek_feedback' => function ($query) {
                         $query->whereNotNull('review')->with('user:id,name,profile_url');
                     }])

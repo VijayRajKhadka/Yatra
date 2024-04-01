@@ -16,14 +16,14 @@ use Illuminate\Support\Facades\DB;
 class PlaceController extends Controller
 {   
     public function getPlaceByID(Request $request){
-        $trek_id = $request->query('place_id');
-        $trek = Place::with(['place_image', 'place_feedback' => function ($query) {
+        $place_id = $request->query('place');
+        $place = Place::with(['place_image', 'place_feedback' => function ($query) {
                         $query->whereNotNull('review')->with('user:id,name,profile_url');
                     }])
-                    ->find($trek_id);
+                    ->find($place_id);
     
-        if($trek){
-            return response()->json(['success' => true, 'data' => $trek], 200);
+        if($place){
+            return response()->json(['success' => true, 'data' => $place], 200);
         } else {
             return response()->json(['success' => false, 'message' => 'Trek not found'], 404);
         }
