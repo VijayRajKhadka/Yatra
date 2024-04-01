@@ -20,14 +20,17 @@ class TrekController extends Controller
         $query = Trek::where('approve', 1)->with('trek_image');
     
         if($search) {
-            $query->where('name', 'like', '%'.$search.'%')
-                  ->orWhere('description', 'like', '%'.$search.'%');
+            $query->where(function($query) use ($search) {
+                $query->where('name', 'like', '%'.$search.'%')
+                      ->orWhere('description', 'like', '%'.$search.'%');
+            });
         }
     
         $treks = $query->paginate(10);
     
         return response()->json(['success' => true, 'data' => $treks], 200);
     }
+    
     
     public function addTrek(Request $request){
         try{

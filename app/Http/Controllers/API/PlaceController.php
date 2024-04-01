@@ -21,8 +21,10 @@ class PlaceController extends Controller
     $query = Place::where('approve', 1)->with('place_image');
 
     if($search) {
-        $query->where('name', 'like', '%'.$search.'%')
-              ->orWhere('description', 'like', '%'.$search.'%');
+        $query->where(function($query) use ($search) {
+            $query->where('name', 'like', '%'.$search.'%')
+                  ->orWhere('description', 'like', '%'.$search.'%');
+        });
     }
 
     $places = $query->paginate(10); 
