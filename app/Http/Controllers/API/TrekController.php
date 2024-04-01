@@ -14,9 +14,21 @@ use Illuminate\Support\Facades\Storage;
 
 class TrekController extends Controller
 {
-    public function getTrekDetails(){
-        return Trek::where('approve', 1)->with('trek_image')->get();
+    public function getTrekDetails(Request $request){
+        $search = $request->query('search');
+    
+        $query = Trek::where('approve', 1)->with('trek_image');
+    
+        if($search) {
+            $query->where('name', 'like', '%'.$search.'%')
+                  ->orWhere('description', 'like', '%'.$search.'%');
+        }
+    
+        $treks = $query->paginate(10);
+    
+        return response()->json(['success' => true, 'data' => $treks], 200);
     }
+    
     public function addTrek(Request $request){
         try{
         $validator = Validator::make($request->all(), [

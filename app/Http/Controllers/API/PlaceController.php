@@ -13,9 +13,24 @@ use Illuminate\Support\Facades\Storage;
 
 class PlaceController extends Controller
 {
-    public function getPlaceDetails(){
-        return Place::where('approve', 1)->with('place_image')->get();
+    public function getPlaceDetails(Request $request){
+    
+    $search = $request->query('search');
+
+   
+    $query = Place::where('approve', 1)->with('place_image');
+
+    if($search) {
+        $query->where('name', 'like', '%'.$search.'%')
+              ->orWhere('description', 'like', '%'.$search.'%');
     }
+
+    $places = $query->paginate(10); 
+
+    return response()->json(['success' => true, 'data' => $places], 200);
+    }
+
+
     public function addPlace(Request $request){
         try{
         $validator = Validator::make($request->all(), [
