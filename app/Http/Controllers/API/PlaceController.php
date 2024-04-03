@@ -33,7 +33,7 @@ class PlaceController extends Controller
         $reviews = PlaceFeedback::with('user:id,name,profile_url')
             ->where('place_id', $placeId)
             ->whereNotNull('review')
-            ->paginate(10);
+            ->paginate(7);
 
         if($reviews){
         return response()->json(['success' => true, 'data' => $reviews], 200);
