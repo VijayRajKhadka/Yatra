@@ -44,4 +44,6 @@ Route::controller(PlaceController::class)->group(function(){
     Route::get('place','getPlaceDetails');
     Route::get('placeDetails','getPlaceByID');
     Route::post('addPlaceFeedback','addPlaceFeedback');
+    Route::get('getPlaceReview','getPlaceReview');
+
 });

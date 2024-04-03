@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
@@ -15,17 +14,31 @@ use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
 {   
-    public function getPlaceByID(Request $request){
+    public function getPlaceByID(Request $request)
+    {
         $place_id = $request->query('place');
-        $place = Place::with(['place_image', 'place_feedback' => function ($query) {
-                        $query->whereNotNull('review')->with('user:id,name,profile_url');
-                    }])
+        
+        $place = Place::with('place_image')
                     ->find($place_id);
-    
+
         if($place){
             return response()->json(['success' => true, 'data' => $place], 200);
         } else {
-            return response()->json(['success' => false, 'message' => 'Trek not found'], 404);
+            return response()->json(['success' => false, 'message' => 'Place not found'], 404);
+        }
+    }
+    
+    public function getPlaceReview(Request $request){
+        $placeId = $request->input('place');
+        $reviews = PlaceFeedback::with('user:id,name,profile_url')
+            ->where('place_id', $placeId)
+            ->whereNotNull('review')
+            ->paginate(2);
+
+        if($reviews){
+        return response()->json(['success' => true, 'data' => $reviews], 200);
+        } else {
+        return response()->json(['success' => false, 'message' => 'Review not found'], 404);
         }
     }
 
