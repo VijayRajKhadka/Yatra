@@ -27,13 +27,13 @@ class PlaceController extends Controller
             return response()->json(['success' => false, 'message' => 'Place not found'], 404);
         }
     }
-    
+
     public function getPlaceReview(Request $request){
         $placeId = $request->input('place');
         $reviews = PlaceFeedback::with('user:id,name,profile_url')
             ->where('place_id', $placeId)
             ->whereNotNull('review')
-            ->paginate(2);
+            ->paginate(10);
 
         if($reviews){
         return response()->json(['success' => true, 'data' => $reviews], 200);
