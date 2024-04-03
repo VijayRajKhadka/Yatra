@@ -32,6 +32,7 @@ Route::controller(TrekController::class)->group(function(){
     Route::get('trek','getTrekDetails');
     Route::get('trekDetails','getTrekByID');
     Route::post('addTrekFeedback','addTrekFeedback');
+    Route::get('trekReview','getTrekReview');
 
 });
 Route::controller(WatchContentController::class)->group(function(){
@@ -44,6 +45,6 @@ Route::controller(PlaceController::class)->group(function(){
     Route::get('place','getPlaceDetails');
     Route::get('placeDetails','getPlaceByID');
     Route::post('addPlaceFeedback','addPlaceFeedback');
-    Route::get('getPlaceReview','getPlaceReview');
+    Route::get('placeReview','getPlaceReview');
 
 });

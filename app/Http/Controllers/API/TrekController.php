@@ -17,14 +17,27 @@ class TrekController extends Controller
 {   
     public function getTrekByID(Request $request){
         $trek_id = $request->query('trek');
-        $trek = Trek::with(['trek_image', 'trek_feedback' => function ($query) {
-                        $query->whereNotNull('review')->with('user:id,name,profile_url');
-                    }])
+        $trek = Trek::with('trek_image')
                     ->find($trek_id);
+        
         if($trek){
             return response()->json(['success' => true, 'data' => $trek], 200);
         } else {
             return response()->json(['success' => false, 'message' => 'Trek not found'], 404);
+        }
+    }
+
+    public function getTrekReview(Request $request){
+        $placeId = $request->input('trek');
+        $reviews = TrekFeedback::with('user:id,name,profile_url')
+            ->where('trek_id', $placeId)
+            ->whereNotNull('review')
+            ->paginate(7);
+
+        if($reviews){
+        return response()->json(['success' => true, 'data' => $reviews], 200);
+        } else {
+        return response()->json(['success' => false, 'message' => 'Review not found'], 404);
         }
     }
 
