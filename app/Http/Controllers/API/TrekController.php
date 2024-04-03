@@ -117,7 +117,7 @@ class TrekController extends Controller
 
         $input = $request->all();
         $imageName = Str::random(32) . "." . $request->file('map_url')->getClientOriginalExtension();
-        $input['map_url'] = $imageName;
+        $input['map_url'] = asset('storage/app/public/'.$imageName);
 
         $newTrek = Trek::create($input);
         $trekId = $newTrek->trek_id;
