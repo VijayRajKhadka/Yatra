@@ -134,8 +134,7 @@ class RestaurantController extends Controller
 
         $newRestaurant = Restaurant::create($input);
 
-        // Change this line to access the correct primary key attribute
-        $restaurantId = $newRestaurant->id;
+        $restaurantId = $newRestaurant->restaurant_id;
         
 
         $images = [];
