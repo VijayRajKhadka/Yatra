@@ -35,7 +35,7 @@ class AuthController extends Controller
             $input['password'] = bcrypt($input['password']);
             $imageName = Str::random(32) . "." . $request->file('profile')->getClientOriginalExtension();
             $input['profile'] = $imageName;
-            $input['profile_url']=asset('storage/app/public/'.$imageName);
+            $input['profile_url']= asset('storage/app/public/'.$imageName);
             $user = User::create($input);
             
             Storage::disk('public')->put($imageName, file_get_contents($request->profile));

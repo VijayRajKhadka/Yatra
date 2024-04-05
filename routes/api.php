@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\TrekController;
 use App\Http\Controllers\API\PlaceController;
+use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\API\WatchContentController;
 
 
@@ -48,3 +49,11 @@ Route::controller(PlaceController::class)->group(function(){
     Route::get('placeReview','getPlaceReview');
 
 });
+Route::controller(RestaurantController::class)->group(function(){
+    Route::post('addRestaurant','addRestaurant');
+    Route::get('restaurantDetails','getRestaurantByID');
+    Route::get('restaurant','getRestaurantDetails');
+    Route::post('addRestaurantFeedback','addRestaurantFeedback');
+    Route::get('restaurantReview','getRestaurantReview');
+});
+
