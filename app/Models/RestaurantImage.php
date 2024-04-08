@@ -16,7 +16,5 @@ class RestaurantImage extends Model
     ];
     protected $table = 'restaurant_image';
 
-    function restaurant_image(){
-        return $this->hasMany('App\Models\RestaurantImage','restaurant_id','restaurant_id');
-    }
+   
 }

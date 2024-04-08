@@ -30,9 +30,10 @@ class TrekController extends Controller
     public function getTrekReview(Request $request){
         $placeId = $request->input('trek');
         $reviews = TrekFeedback::with('user:id,name,profile_url')
-            ->where('trek_id', $placeId)
-            ->whereNotNull('review')
-            ->paginate(7);
+        ->where('trek_id', $placeId)
+        ->whereNotNull('review')
+        ->orderBy('created_at', 'desc')
+        ->paginate(7);
 
         if($reviews){
         return response()->json(['success' => true, 'data' => $reviews], 200);

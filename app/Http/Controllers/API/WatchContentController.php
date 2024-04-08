@@ -31,7 +31,6 @@ try {
 
     $input = $request->all();
 
-    // Extracting video ID from YouTube URL
     $content_url = $input['content_url'];
     $video_id = '';
 
@@ -41,7 +40,6 @@ try {
         $video_id = substr(strrchr($content_url, '/'), 1);
     }
 
-    // Constructing embed URL
     if (!empty($video_id)) {
         $embed_url = 'https://www.youtube.com/embed/' . $video_id;
         $input['content_url'] = $embed_url;

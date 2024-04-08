@@ -64,6 +64,7 @@ class RestaurantController extends Controller
         $reviews = RestaurantFeedback::with('user:id,name,profile_url')
             ->where('restaurant_id', $restrauntID)
             ->whereNotNull('review')
+            ->orderBy('created_at', 'desc')
             ->paginate(7);
 
         if($reviews){

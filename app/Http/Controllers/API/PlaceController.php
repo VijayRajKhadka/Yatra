@@ -32,6 +32,7 @@ class PlaceController extends Controller
         $placeId = $request->input('place');
         $reviews = PlaceFeedback::with('user:id,name,profile_url')
             ->where('place_id', $placeId)
+            ->orderBy('created_at', 'desc')
             ->whereNotNull('review')
             ->paginate(7);
 
