@@ -14,7 +14,7 @@ class AdminController extends Controller
 
     public function treks()
     {
-        $treks = Trek::paginate(2); 
+        $treks = Trek::paginate(10); 
         return view('admin.trek', compact('treks'));
     }
 

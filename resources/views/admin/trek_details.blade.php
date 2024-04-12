@@ -68,7 +68,7 @@
     <div class="col-md-6">
         <p>Created At: {{ $treks->created_at }}</p>
         <div class="col-md-6">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         @foreach($trekImage->trek_image as $key => $image)
         <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : '' }}"></li>
@@ -77,7 +77,7 @@
     <div class="carousel-inner">
         @foreach($trekImage->trek_image as $key => $image)
         <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-            <img class="d-block w-100" src="{{ $image->trek_image_path }}" alt="Trek Image">
+            <img class="d-block w-100" src="{{ $image->trek_image_path }}" alt="Trek Image" style="max-height: 400px;">
         </div>
         @endforeach
     </div>
@@ -90,6 +90,7 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+
 
 
         <div class="mt-3">
