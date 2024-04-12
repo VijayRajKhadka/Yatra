@@ -7,6 +7,7 @@ use App\Http\Controllers\API\TrekController;
 use App\Http\Controllers\API\PlaceController;
 use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\API\WatchContentController;
+use App\Http\Controllers\API\RecommendationController;
 
 
 /*
@@ -57,3 +58,6 @@ Route::controller(RestaurantController::class)->group(function(){
     Route::get('restaurantReview','getRestaurantReview');
 });
 
+Route::controller(RecommendationController::class)->group(function(){
+    Route::post('predict','predict');
+});
