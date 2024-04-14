@@ -34,6 +34,12 @@ Route::get('/logout',[AuthController::class,'logout']);
 // ********** Super Admin Routes *********
 Route::group(['prefix' => 'super-admin','middleware'=>['web','isSuperAdmin']],function(){
     Route::get('/dashboard',[SuperAdminController::class,'dashboard']);
+    Route::get('/user',[SuperAdminController::class,'users'])->name('users');
+    Route::get('/searchUsers', [SuperAdminController::class, 'searchUsers'])->name('searchUsers');
+    Route::get('/editUser/{id}', [SuperAdminController::class, 'editUser'])->name('userDetails');
+    Route::put('/updateUser/{id}',[SuperAdminController::class,'updateUser'])->name('updateUser');
+    Route::put('/deleteUser/{id}',[SuperAdminController::class,'deleteUser'])->name('deleteUser');
+
 
 });
 
@@ -54,5 +60,6 @@ Route::group(['prefix' => 'admin','middleware'=>['web','isAdmin']],function(){
     Route::get('/restaurantDetails/{restaurant_id}', [AdminController::class, 'getRestaurantDetails'])->name('restaurantDetails');
     Route::put('/updateRestaurant/{restaurant_id}', [AdminController::class, 'updateRestaurantDetails'])->name('updateRestaurantDetails');
     Route::get('/searchRestaurant', [AdminController::class, 'searchRestaurant'])->name('searchRestaurant');
+
 
 });

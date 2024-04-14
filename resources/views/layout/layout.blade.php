@@ -10,6 +10,9 @@
     <script src="https://kit.fontawesome.com/467cba3d21.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 
@@ -31,6 +34,15 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            @if(auth()->user()->role == 1)
+            <li class="list_item">
+                <a href="{{route('users')}}" class="list_item_sidebar">
+                    <i class="fas fa-user"></i>
+                    <span>Manage User</span>
+                </a>
+            </li>
+            @endif
+
             <li class="list_item">
             <a href="#" class="list_item_sidebar toggle_submenu">
                 <i class="fas fa-walking"></i>
