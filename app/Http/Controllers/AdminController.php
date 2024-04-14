@@ -104,6 +104,7 @@ public function place($approve)
         $placeImage = Place::with('place_image')->find($place);
 
         return view('admin.place_details', compact('place', 'placeImage'));
+
     }
 
     public function updatePlaceDetails(Request $request, $place_id)
@@ -153,6 +154,8 @@ public function getRestaurantDetails($restaurant_id)
     $restaurant = Restaurant::findOrFail($restaurant_id);
 
     $restaurantImages = Restaurant::with('restaurant_image')->find($restaurant);
+
+
 
     return view('admin.restaurant_details', compact('restaurant', 'restaurantImages'));
 

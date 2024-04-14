@@ -67,29 +67,30 @@
         </div>
     </div>
     <div class="col-md-6">
-        <p>Created At: {{ $restaurant->created_at }}</p>
-        <div id="imageSlider" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                @foreach($restaurantImages as $key => $image)
-                <li data-target="#imageSlider" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : '' }}"></li>
-                @endforeach
-            </ol>
-            <div class="carousel-inner">
-                @foreach($restaurantImages as $key => $image)
-                <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                    <img class="d-block w-100" src="{{ $image->restaurant_image_path }}" alt="Image {{ $key }}">
-                </div>
-                @endforeach
+    <p>Created At: {{ $restaurant->created_at }}</p>
+    <div class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @foreach($restaurantImages->first()->restaurant_image as $key => $image)
+            <li data-target="#imageSlider" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : '' }}"></li>
+            @endforeach
+        </ol>
+        <div class="carousel-inner">
+            @foreach($restaurantImages->first()->restaurant_image as $key => $image)
+            <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                <img class="d-block w-100" src="{{ $image->restaurant_image_path }}" alt="Restaurant Image" style="max-height: 400px;">
             </div>
-            <a class="carousel-control-prev" href="#imageSlider" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#imageSlider" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            @endforeach
         </div>
+        <a class="carousel-control-prev" href="#imageSlider" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#imageSlider" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
+</div>
+
 </div>
 @endsection

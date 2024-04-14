@@ -62,12 +62,12 @@
         <p>Created At: {{ $place->created_at }}</p>
         <div id="imageSlider" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-                @foreach($placeImage as $key => $image)
+                @foreach($placeImage->first()->place_image as $key => $image)
                 <li data-target="#imageSlider" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : '' }}"></li>
                 @endforeach
             </ol>
             <div class="carousel-inner">
-                @foreach($placeImage as $key => $image)
+                @foreach($placeImage->first()->place_image as $key => $image)
                 <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
                     <img class="d-block w-100" src="{{ $image->place_image_path }}" alt="Image {{ $key }}">
                 </div>
