@@ -77,7 +77,7 @@
             <div class="carousel-inner">
                 @foreach($restaurantImages as $key => $image)
                 <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                    <img class="d-block w-100" src="{{ $image->image_url }}" alt="Image {{ $key }}">
+                    <img class="d-block w-100" src="{{ $image->restaurant_image_path }}" alt="Image {{ $key }}">
                 </div>
                 @endforeach
             </div>

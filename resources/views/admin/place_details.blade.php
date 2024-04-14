@@ -42,7 +42,7 @@
                     <input type="text" name="open_time" value="{{ $place->open_time }}" class="form-control">
                 </div>
                 <div class="col-md-6">
-                    <strong>Get There: </strong>
+                    <str`ong>Get There: </strong>
                     <input type="text" name="get_there" value="{{ $place->get_there }}" class="form-control">
                 </div>
                 <div class="col-md-6">
@@ -69,7 +69,7 @@
             <div class="carousel-inner">
                 @foreach($placeImage as $key => $image)
                 <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                    <img class="d-block w-100" src="{{ $image->image_url }}" alt="Image {{ $key }}">
+                    <img class="d-block w-100" src="{{ $image->place_image_path }}" alt="Image {{ $key }}">
                 </div>
                 @endforeach
             </div>
