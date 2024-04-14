@@ -58,7 +58,7 @@
             </select>
         </div>
         <div class="col-md-12">
-            <button type="submit" class="btn btn-success btn-lg">Approve</button>
+            <button type="submit" class="btn btn-success btn-lg">Approve Trek</button>
         </div>
     </form>
 </div>

@@ -63,6 +63,7 @@
         <br/>
         <div class="container-one-container">
             <div class="container-one">
+                <br/>
                 <h1>What is Yatra ?</h1>
                 <p>|</p>
                 <p>Yatra is your friend to your new journey.<br/>

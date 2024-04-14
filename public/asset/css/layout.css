@@ -1,6 +1,6 @@
 * {
     font-family: "Roboto", sans-serif;
-    --sidebarWidth: 5rem;
+    --sidebarWidth: 7rem;
 }
 
 body {
@@ -70,7 +70,7 @@ li {
 }
 
 .main_sidebar .list_item:hover {
-    background-color: #559eaa;
+    color: black;
 }
 
 .list_item_sidebar {
@@ -107,4 +107,13 @@ li {
 
 #last_list_item:hover {
     background-color: #cf6679;
+}
+
+
+.submenu {
+    display: none;
+}
+
+.submenu.show {
+    display: block;
 }

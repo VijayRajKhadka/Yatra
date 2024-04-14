@@ -15,7 +15,15 @@
     }, 3000);
 </script>
 
+<form action="{{ route('searchTrek') }}" method="GET" class="mb-3" style="float: right; width: 500px;">
+    <div class="input-group">
+        <input type="text" name="query" class="form-control" placeholder="Search treks...">
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </div>
+</form>
+
 <table class="table">
+    
     <thead>
         <tr>
             <th scope="col">Trek ID</th>
@@ -25,6 +33,8 @@
             <th scope="col">Days</th>
             <th scope="col">Approve</th>
             <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+
             <th scope="col">View</th>
             <th scope="col">Delete</th>
         </tr>
@@ -42,6 +52,7 @@
             </td>
 
             <td>{{ $trek->created_at->format('M d Y') }}</td>
+            <td>{{ $trek->updated_at->format('M d Y') }}</td>
 
             <td>
             <a href="{{ route('trekDetails', $trek->trek_id) }}" class="btn btn-outline-primary">

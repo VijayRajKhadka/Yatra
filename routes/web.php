@@ -40,8 +40,19 @@ Route::group(['prefix' => 'super-admin','middleware'=>['web','isSuperAdmin']],fu
 // ********** Sub Admin Routes *********
 Route::group(['prefix' => 'admin','middleware'=>['web','isAdmin']],function(){
     Route::get('/dashboard',[AdminController::class,'dashboard']);
-    Route::get('/trek',[AdminController::class,'treks'])->name('adminTrek');
-    Route::get('/trek/{trek_id}',[AdminController::class,'getTrekDetails'])->name('trekDetails');
+    Route::get('/trek/{approve}', [AdminController::class, 'treks'])->name('adminTrek');
+    Route::get('/trekDetails/{trek_id}',[AdminController::class,'getTrekDetails'])->name('trekDetails');
     Route::put('/updateTrek/{trek_id}',[AdminController::class,'updateTrekDetails'])->name('updateTrekDetails');
+    Route::get('/searchTrek', [AdminController::class, 'searchTrek'])->name('searchTrek');
+
+    Route::get('/place/{approve}', [AdminController::class, 'place'])->name('adminPlace');
+    Route::get('/placeDetails/{place_id}',[AdminController::class,'getPlaceDetails'])->name('placeDetails');
+    Route::put('/updatePlace/{place_id}',[AdminController::class,'updatePlaceDetails'])->name('updatePlaceDetails');
+    Route::get('/searchPlace', [AdminController::class, 'searchPlace'])->name('searchPlace');
+
+    Route::get('/restaurant/{approve}', [AdminController::class, 'restaurant'])->name('adminRestaurant');
+    Route::get('/restaurantDetails/{restaurant_id}', [AdminController::class, 'getRestaurantDetails'])->name('restaurantDetails');
+    Route::put('/updateRestaurant/{restaurant_id}', [AdminController::class, 'updateRestaurantDetails'])->name('updateRestaurantDetails');
+    Route::get('/searchRestaurant', [AdminController::class, 'searchRestaurant'])->name('searchRestaurant');
 
 });
