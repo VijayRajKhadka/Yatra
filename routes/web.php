@@ -35,6 +35,7 @@ Route::get('/logout',[AuthController::class,'logout']);
 Route::group(['prefix' => 'super-admin','middleware'=>['web','isSuperAdmin']],function(){
     Route::get('/dashboard',[SuperAdminController::class,'dashboard']);
     Route::get('/user',[SuperAdminController::class,'users'])->name('users');
+    Route::get('/event',[SuperAdminController::class,'events'])->name('events');
     Route::get('/searchUsers', [SuperAdminController::class, 'searchUsers'])->name('searchUsers');
     Route::get('/editUser/{id}', [SuperAdminController::class, 'editUser'])->name('userDetails');
     Route::put('/updateUser/{id}',[SuperAdminController::class,'updateUser'])->name('updateUser');

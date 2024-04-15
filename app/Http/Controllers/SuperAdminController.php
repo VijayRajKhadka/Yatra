@@ -13,13 +13,16 @@ class SuperAdminController extends Controller
     }
     
     public function users()
-{
-    $usersWithRole1 = User::where('role', 1)->paginate(10);
-    $usersDescending = User::whereNotNull('role')->whereNotIn('role', [1, 3])->orderBy('role', 'desc')->paginate(10);
-    
-    return view('super-admin.user', compact('usersWithRole1', 'usersDescending'));
-}
+    {
+        $usersWithRole1 = User::where('role', 1)->paginate(10);
+        $usersDescending = User::whereNotNull('role')->whereNotIn('role', [1, 3])->orderBy('role', 'desc')->paginate(10);
+        
+        return view('super-admin.user', compact('usersWithRole1', 'usersDescending'));
+    }
 
+    public function events(){
+        return view('super-admin.events');
+    }
 
     public function searchUsers(Request $request)
     {

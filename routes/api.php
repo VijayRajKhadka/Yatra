@@ -8,6 +8,8 @@ use App\Http\Controllers\API\PlaceController;
 use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\API\WatchContentController;
 use App\Http\Controllers\API\RecommendationController;
+use App\Http\Controllers\API\NotificationController;
+
 
 
 /*
@@ -24,6 +26,7 @@ use App\Http\Controllers\API\RecommendationController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post("notification",[NotificationController::class, 'notifyapp'])->name('send.notification');
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('login','login');
