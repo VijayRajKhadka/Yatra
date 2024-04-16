@@ -10,7 +10,7 @@ use App\Http\Controllers\API\WatchContentController;
 use App\Http\Controllers\API\RecommendationController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\EventController;
-
+use App\Http\Controllers\API\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +32,12 @@ Route::post("notification",[NotificationController::class, 'notifyapp'])->name('
 Route::controller(AuthController::class)->group(function(){
     Route::post('login','login');
     Route::post('register','register');
+
+});
+
+Route::controller(UserController::class)->group(function(){
+    Route::post('changePassword','changePassword');
+    Route::post('changeProfile','updateProfilePic');
 });
 
 Route::controller(EventController::class)->group(function(){
