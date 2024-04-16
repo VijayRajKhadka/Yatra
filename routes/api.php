@@ -9,7 +9,7 @@ use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\API\WatchContentController;
 use App\Http\Controllers\API\RecommendationController;
 use App\Http\Controllers\API\NotificationController;
-
+use App\Http\Controllers\API\EventController;
 
 
 /*
@@ -24,14 +24,23 @@ use App\Http\Controllers\API\NotificationController;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return response()->json($request->user(), 200);
 });
+
 Route::post("notification",[NotificationController::class, 'notifyapp'])->name('send.notification');
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('login','login');
     Route::post('register','register');
 });
+
+Route::controller(EventController::class)->group(function(){
+    Route::get('verifiedRestaurant','getVerifiedRestaurant');
+    Route::post('addRestaurantEvent','addRestaurantEvent');
+    Route::get('restaurantEvents','getRestaurantEvents');
+});
+
+
 Route::controller(TrekController::class)->group(function(){
     Route::post('addTrek','addTrek');
     Route::get('trek','getTrekDetails');

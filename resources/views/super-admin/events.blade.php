@@ -14,7 +14,7 @@
             $('#successAlert').fadeOut('slow');
         }, 3000);
 
-    }
+    
 
 </script>
     <form method="post" action="{{ route('send.notification') }}">

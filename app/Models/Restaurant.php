@@ -19,8 +19,8 @@ class Restaurant extends Model
         'latitude',
         'longitude',
         'get_there',
-        'pan'
-        
+        'pan',
+        'added_by'
     ];
     protected $table = 'restaurant';
     protected $primaryKey = "restaurant_id";

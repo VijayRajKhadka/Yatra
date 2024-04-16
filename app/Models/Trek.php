@@ -28,6 +28,7 @@ class Trek extends Authenticatable
         'emergency_no',
         'map_url',
         'budgetRange',
+        'added_by'
     ];
     protected $primaryKey = "trek_id";
 

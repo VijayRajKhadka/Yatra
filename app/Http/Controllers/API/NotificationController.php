@@ -57,7 +57,8 @@ class NotificationController extends Controller
         } 
 
         curl_close($ch);
-        return redirect()->route('events',)->with('success', "Notification was Sent Successfully");
+        return redirect()->back()->with('success', 'Notification sent successfully');
+
         }
 
         

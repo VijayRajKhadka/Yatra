@@ -123,6 +123,7 @@ class RestaurantController extends Controller
             'get_there'=>'required',
             'affordability'=> 'required',
             'pan' => 'sometimes',
+            'added_by'=>'required',
             'images' => 'required|array',
             'images.*' => 'mimes:png,jpg,jpeg',
         ]);

@@ -18,6 +18,7 @@ class Place extends Model
         'latitude',
         'longitude',
         'get_there',
+        'added_by'
         
     ];
     protected $primaryKey = "place_id";

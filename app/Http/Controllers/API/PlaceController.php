@@ -106,6 +106,7 @@ class PlaceController extends Controller
             'latitude'=>'required',
             'longitude'=>'required',
             'get_there'=>'required',
+            'added_by'=>'required',
             'images' => 'required|array',
             'images.*' => 'mimes:png,jpg,jpeg',
         ]);

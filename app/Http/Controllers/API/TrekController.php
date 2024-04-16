@@ -105,7 +105,7 @@ class TrekController extends Controller
             'altitude'=>'required',
             'difficulty'=>'required',
             'no_of_days'=>'required',
-            'emergency_no'=>'required',
+            'added_by' => 'required',
             'map_url'=>'required|mimes:png,jpg,jpeg',
             'budgetRange'=>'required',
             'images' => 'required|array',
