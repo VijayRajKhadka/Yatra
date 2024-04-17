@@ -18,8 +18,14 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required',
             'old_password' => 'required',
-            'new_password' => 'required|min:8',
+            'new_password' => [
+                'required',
+                'min:6',
+                'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+            ],
             'confirm_password' => 'required|same:new_password',
+        ], [
+            'new_password.regex' => 'Password should also consist Number, and Special Character',
         ]);
         
         if ($validator->fails()) {
@@ -31,7 +37,7 @@ class UserController extends Controller
         $user = User::findOrFail($input['id']);
 
         if (!Hash::check($input['old_password'], $user->password)) {
-            return response()->json(['error' => 'Old password is incorrect'], 400);
+            return response()->json(['success' => false, 'message' => 'Old password is incorrect'], 400);
         }
 
         $newPasswordHash = Hash::make($input['new_password']);

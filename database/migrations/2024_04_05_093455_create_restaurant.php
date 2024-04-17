@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('get_there');
             $table->string('pan')->nullable();
             $table->boolean('approve')->default(0);
+            $table->bigint('added_by');
+
             $table->timestamps();
         });
     }

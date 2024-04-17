@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('place', function (Blueprint $table) {
-            $table->id('place_id');
-            $table->string('name');
-            $table->string('description');
+        Schema::create('historical_places', function (Blueprint $table) {
+            $table->id('historical_place_id');
+            $table->string('name')->unique();
             $table->string('location');
-            $table->enum('category',["Park","Temple","Museum","Shopping-Mall","View-Point",'Other']);
-            $table->string('open_time');
+            $table->string('description');
+            $table->string('get_there');
+            $table->string('map_url');
             $table->string('latitude');
             $table->string('longitude');
-            $table->string('get_there');
-            $table->boolean('approve')->default(0);
-            $table->bigint('added_by');
+            $table->string('open_time');
+            $table->string('ticket_price');
+            $table->string('contact_no');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('place');
+        Schema::dropIfExists('historical_places');
     }
 };

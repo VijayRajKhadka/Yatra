@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('place', function (Blueprint $table) {
-            $table->id('place_id');
+        Schema::create('travel_agency', function (Blueprint $table) {
+            $table->id('agency_id');
             $table->string('name');
-            $table->string('description');
+            $table->string('email');
+            $table->string('contact_no');
             $table->string('location');
-            $table->enum('category',["Park","Temple","Museum","Shopping-Mall","View-Point",'Other']);
-            $table->string('open_time');
-            $table->string('latitude');
-            $table->string('longitude');
-            $table->string('get_there');
+            $table->string('document_url');
+            $table->string('registration_no');
+            $table->string('agency_image_url');
             $table->boolean('approve')->default(0);
-            $table->bigint('added_by');
+            $table->unsignedBigInteger('added_by');
+            $table->foreign('added_by')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('place');
+        Schema::dropIfExists('travel_agency');
     }
 };

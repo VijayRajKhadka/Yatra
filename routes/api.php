@@ -11,7 +11,7 @@ use App\Http\Controllers\API\RecommendationController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\UserController;
-
+use App\Http\Controllers\API\TravelAgencyController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -44,8 +44,18 @@ Route::controller(EventController::class)->group(function(){
     Route::get('verifiedRestaurant','getVerifiedRestaurant');
     Route::post('addRestaurantEvent','addRestaurantEvent');
     Route::get('restaurantEvents','getRestaurantEvents');
+    Route::get('verifiedAgency','getVerifiedAgency');
+    Route::post('addTravelEvent','addTravelEvent');
+    Route::get('travelEvents','getTravelEvents');
+
 });
 
+Route::controller(TravelAgencyController::class)->group(function(){
+    Route::post('addAgency','addTravelAgency');
+    Route::post('addGuide','addTravelGuide');
+
+    
+});
 
 Route::controller(TrekController::class)->group(function(){
     Route::post('addTrek','addTrek');

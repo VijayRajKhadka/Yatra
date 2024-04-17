@@ -22,11 +22,16 @@ class AuthController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'contact' => 'required',
                 'profile' => 'required|mimes:png,jpg,jpeg,gif',
-                'password' => 'required',
+                'password' => [
+                    'required',
+                    'min:6',
+                    'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+                ],
                 'confirm_password' => 'required|same:password',
-                
+            ], [
+                'password.regex' => 'Password should also consist Number, and Special Character',
             ]);
-
+            
             if ($validator->fails()) {
                 return response()->json(['success' => false, 'message' => $validator->errors()], 400);
             }

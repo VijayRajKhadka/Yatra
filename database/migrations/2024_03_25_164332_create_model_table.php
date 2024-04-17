@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('budgetRange',["1,000-5,000","5,000-10,000","10,0000-15,0000",
             "15,000-20,0000","20,0000-30,000", "30,000-40,0000","40,0000-50,0000","50,000+"]);
             $table->boolean('approve')->default(0);
+            $table->bigint('added_by');
 
             $table->timestamps();
         });
