@@ -52,22 +52,22 @@ class AdminController extends Controller
     }
 
     public function updateTrekDetails(Request $request, $trek_id)
-{
-    $trek = Trek::find($trek_id);
-    $trek->name = $request->input('name');
-    $trek->description = $request->input('description');
-    $trek->location = $request->input('location');
-    $trek->category = $request->input('category');
-    $trek->altitude = $request->input('altitude');
-    $trek->difficulty = $request->input('difficulty');
-    $trek->no_of_days = $request->input('no_of_days');
-    $trek->emergency_no = $request->input('emergency_no');
-    $trek->budgetRange = $request->input('budgetRange');
-    $trek->approve = $request->input('approve');
-    $trek->update();
+    {
+        $trek = Trek::find($trek_id);
+        $trek->name = $request->input('name');
+        $trek->description = $request->input('description');
+        $trek->location = $request->input('location');
+        $trek->category = $request->input('category');
+        $trek->altitude = $request->input('altitude');
+        $trek->difficulty = $request->input('difficulty');
+        $trek->no_of_days = $request->input('no_of_days');
+        $trek->emergency_no = $request->input('emergency_no');
+        $trek->budgetRange = $request->input('budgetRange');
+        $trek->approve = $request->input('approve');
+        $trek->update();
 
-    return redirect()->route('adminTrek', $trek_id)->with('success', "Trek {$trek->name} details updated successfully.");
-}
+        return redirect()->route('adminTrek', $trek_id)->with('success', "Trek {$trek->name} details updated successfully.");
+    }
 
 
 public function place($approve)

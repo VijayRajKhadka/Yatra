@@ -5,6 +5,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\MonumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,12 +37,23 @@ Route::group(['prefix' => 'super-admin','middleware'=>['web','isSuperAdmin']],fu
     Route::get('/dashboard',[SuperAdminController::class,'dashboard']);
     Route::get('/user',[SuperAdminController::class,'users'])->name('users');
     Route::get('/event',[SuperAdminController::class,'events'])->name('events');
+
     Route::get('/searchUsers', [SuperAdminController::class, 'searchUsers'])->name('searchUsers');
     Route::get('/editUser/{id}', [SuperAdminController::class, 'editUser'])->name('userDetails');
     Route::put('/updateUser/{id}',[SuperAdminController::class,'updateUser'])->name('updateUser');
     Route::put('/deleteUser/{id}',[SuperAdminController::class,'deleteUser'])->name('deleteUser');
 
+    Route::get('/historicalPlaces',[SuperAdminController::class,'historicalPlaces'])->name('historicalPlaces');
+    Route::get('/addHistoricalPlaces',[SuperAdminController::class,'addHistoricalPlaces'])->name('addHistoricalPlace');
+    Route::post('/submitHistPlaceForm',[SuperAdminController::class,'submitHistPlaceForm'])->name('submitHistPlaceForm');
+    Route::get('/historicalPlace/{historical_place_id}',[SuperAdminController::class,'getHistoricalPlaces'])->name('historicalPlaceDetails');
+    Route::put('/updatehistoricalPlace/{historical_place_id}',[SuperAdminController::class,'updateHistDetails'])->name('updateHistoricalPlace');
+    Route::post('/addMonument',[MonumentController::class,'addMonument'])->name('addMonument');
+    Route::put('/updateMonument/{monuments_id}',[MonumentController::class,'updateMonument'])->name('updateMonument');
+    Route::put('/deleteMonument/{monuments_id}',[MonumentController::class,'deleteMonument'])->name('deleteMonument');
+    Route::put('/deleteHistoricalPlace/{historical_place_id}',[SuperAdminController::class,'deleteHistoricalPlace'])->name('deleteHistoricalPlace');
 
+    
 });
 
 // ********** Sub Admin Routes *********

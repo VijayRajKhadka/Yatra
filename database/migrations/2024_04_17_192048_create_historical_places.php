@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('open_time');
             $table->string('ticket_price');
             $table->string('contact_no');
+            $table->boolean('isDeleted')->default(0);
             $table->timestamps();
         });
     }

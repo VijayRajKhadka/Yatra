@@ -42,6 +42,12 @@
                 </a>
             </li>
             <li class="list_item">
+                <a href="{{route('historicalPlaces')}}" class="list_item_sidebar">
+                <i class="fas fa-monument"></i>
+                    <span>Historical Places</span>
+                </a>
+            </li>
+            <li class="list_item">
                 <a href="{{route('events')}}" class="list_item_sidebar">
                     <i class="fas fa-calendar"></i>
                     <span>Events</span>

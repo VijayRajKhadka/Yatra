@@ -97,7 +97,6 @@ class TravelAgencyController extends Controller
             return response()->json($response, 200);
         } catch (Exception $e) {
                 return response()->json(['success' => false, 'message' => 'Some Error Occured Try Again Later'], 400);
-           
         }
     }
 }

@@ -126,6 +126,7 @@ class EventController extends Controller
 
             return response()->json(['success' => true, 'data' => $restaurantEvents], 200);
         }
+        
     public function getTravelEvents()
         {
             $currentTime = now();

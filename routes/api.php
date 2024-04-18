@@ -12,6 +12,7 @@ use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TravelAgencyController;
+use App\Http\Controllers\HistoricalPlaceController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -86,6 +87,7 @@ Route::controller(RestaurantController::class)->group(function(){
     Route::get('restaurantReview','getRestaurantReview');
 });
 
-Route::controller(RecommendationController::class)->group(function(){
-    Route::post('predict','predict');
+Route::controller(HistoricalPlaceController::class)->group(function(){
+    Route::get('historicalPlace','getHistoricalPlaces');
 });
+

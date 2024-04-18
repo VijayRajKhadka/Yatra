@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('historical_place_images', function (Blueprint $table) {
-            $table->id('historical_place_image_id');
-            $table->string('historical_place_image_name');
-            $table->string('historical_place_image_path');
+        Schema::create('monuments', function (Blueprint $table) {
+            $table->id('monuments_id');
+            $table->string('name')->unique();
+            $table->text('description');
+            $table->string('monument_imageUrl');
             $table->unsignedBigInteger('historical_place_id');
-            $table->foreign('historical_place_id')->references('historical_place_id')->on('historical_places');
+            $table->foreign('historical_place_id')->references('historical_place_id')->on('historical_places')->cascade();
+            $table->boolean('isDeleted')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('historical_place_images');
+        Schema::dropIfExists('monuments');
     }
 };
