@@ -14,10 +14,7 @@ use Validator;
 
 class SuperAdminController extends Controller
 {
-    public function dashboard()
-    {
-        return view('super-admin.dashboard');
-    }
+    
     
     public function users()
     {

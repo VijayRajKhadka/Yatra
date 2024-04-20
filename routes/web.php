@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\MonumentController;
-
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,7 +34,7 @@ Route::get('/logout',[AuthController::class,'logout']);
 
 // ********** Super Admin Routes *********
 Route::group(['prefix' => 'super-admin','middleware'=>['web','isSuperAdmin']],function(){
-    Route::get('/dashboard',[SuperAdminController::class,'dashboard']);
+    Route::get('/dashboard',[DashboardController::class,'dashboard']);
     Route::get('/user',[SuperAdminController::class,'users'])->name('users');
     Route::get('/event',[SuperAdminController::class,'events'])->name('events');
 

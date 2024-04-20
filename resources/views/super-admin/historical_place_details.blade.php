@@ -77,12 +77,12 @@
         <p>Created At: {{ $hists->created_at }}</p>
         <div id="imageSlider" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-                @foreach($histsImages->first()->historical_place_image as $key => $image)
+                @foreach($histsImages->historical_place_image as $key => $image)
                 <li data-target="#imageSlider" data-slide-to="{{ $key }}" class="{{ $key === 0 ? 'active' : '' }}"></li>
                 @endforeach
             </ol>
             <div class="carousel-inner">
-                @foreach($histsImages->first()->historical_place_image as $key => $image)
+                @foreach($histsImages->historical_place_image as $key => $image)
                 <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
                 <img class="d-block w-100" src="{{ $image->historical_place_image_path }}" alt="Image {{ $key }}">
                 </div>
