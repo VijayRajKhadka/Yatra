@@ -3,8 +3,6 @@
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <h2 class="mb-4">Super Admin</h2>
-
 <div class="container">
       <div class="row">
       <div class="col-md-3">

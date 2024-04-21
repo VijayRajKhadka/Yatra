@@ -34,7 +34,7 @@ Route::get('/logout',[AuthController::class,'logout']);
 
 // ********** Super Admin Routes *********
 Route::group(['prefix' => 'super-admin','middleware'=>['web','isSuperAdmin']],function(){
-    Route::get('/dashboard',[DashboardController::class,'dashboard']);
+    Route::get('/dashboard',[DashboardController::class,'superAdminDashboard'])->name('superdashboard');
     Route::get('/user',[SuperAdminController::class,'users'])->name('users');
     Route::get('/event',[SuperAdminController::class,'events'])->name('events');
 
@@ -58,7 +58,7 @@ Route::group(['prefix' => 'super-admin','middleware'=>['web','isSuperAdmin']],fu
 
 // ********** Sub Admin Routes *********
 Route::group(['prefix' => 'admin','middleware'=>['web','isAdmin']],function(){
-    Route::get('/dashboard',[AdminController::class,'dashboard']);
+    Route::get('/dashboard',[DashboardController::class,'AdminDashboard'])->name('admindashboard');
     Route::get('/trek/{approve}', [AdminController::class, 'treks'])->name('adminTrek');
     Route::get('/trekDetails/{trek_id}',[AdminController::class,'getTrekDetails'])->name('trekDetails');
     Route::put('/updateTrek/{trek_id}',[AdminController::class,'updateTrekDetails'])->name('updateTrekDetails');
@@ -74,5 +74,11 @@ Route::group(['prefix' => 'admin','middleware'=>['web','isAdmin']],function(){
     Route::put('/updateRestaurant/{restaurant_id}', [AdminController::class, 'updateRestaurantDetails'])->name('updateRestaurantDetails');
     Route::get('/searchRestaurant', [AdminController::class, 'searchRestaurant'])->name('searchRestaurant');
 
+    Route::get('/travelAgency/{appprove}', [AdminController::class, 'travelAgency'])->name('travelAgency');
+    Route::get('/searchAgency', [AdminController::class, 'searchAgency'])->name('searchAgency');
+    Route::get('/agencyDetails/{agency_id}', [AdminController::class, 'getAgencyDetails'])->name('agencyDetails');
+    Route::put('/updateAgency/{agency_id}', [AdminController::class, 'updateAgencyDetails'])->name('updateAgencyDetails');
+
+    
 
 });

@@ -28,13 +28,14 @@
                     <span class="list_item_sidebar">{{ auth()->user()->role === 1 ? 'Super Admin' : 'Admin' }},</span>
                     <span class="list_item_sidebar">{{ auth()->user()->name }}</span>
             </li>
+            
+            @if(auth()->user()->role == 1)
             <li class="list_item">
-                <a href="#" class="list_item_sidebar">
+                <a href="{{route('superdashboard')}}" class="list_item_sidebar">
                     <i class="fas fa-chart-bar"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
-            @if(auth()->user()->role == 1)
             <li class="list_item">
                 <a href="{{route('users')}}" class="list_item_sidebar">
                     <i class="fas fa-user"></i>
@@ -54,7 +55,13 @@
                 </a>
             </li>
             @endif
-
+            @if(auth()->user()->role == 2)
+            <li class="list_item">
+                <a href="{{route('admindashboard')}}" class="list_item_sidebar">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
             <li class="list_item">
             <a href="#" class="list_item_sidebar toggle_submenu">
                 <i class="fas fa-walking"></i>
@@ -117,6 +124,27 @@
                 </li>
                 </ul>
             </li>
+            <li class="list_item">
+                <a href="#" class="list_item_sidebar toggle_submenu">
+                <i class="fas fa-plane"></i>
+                    <span>Travel</span>
+                </a>
+                <ul class="submenu submenu_trek">
+                <li class="list_item">
+                    <a href="{{ route('travelAgency', '0') }}" class="list_item_sidebar">
+                    <i class="fas fa-hourglass-start"></i>
+                        <span>Pending</span>
+                    </a>
+                </li>
+                <li class="list_item">
+                    <a href="{{ route('travelAgency', '1') }}" class="list_item_sidebar">
+                    <i class="fas fa-check-circle"></i>
+                        <span>Approved</span>
+                    </a>
+                </li>
+                </ul>
+            </li>
+            @endif
             <li class="list_item" id="last_list_item">
                 <a href="/logout" class="list_item_sidebar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">

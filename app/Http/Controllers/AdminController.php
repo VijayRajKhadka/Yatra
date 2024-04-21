@@ -6,6 +6,7 @@ use App\Models\Place;
 use App\Models\Restaurant;
 
 
+use App\Models\TravelAgency;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -179,5 +180,51 @@ public function updateRestaurantDetails(Request $request, $restaurant_id)
     return redirect()->route('adminRestaurant', $restaurant_id)->with('success', "Restaurant {$restaurant->name} details updated successfully.");
 }
 
+
+public function travelAgency($approve){
+    if ($approve === '0') {
+        $agencies = TravelAgency::where('approve', 0)->paginate(10);
+    } elseif ($approve === '1') {
+        $agencies = TravelAgency::where('approve', 1)->paginate(10);
+    } else {
+        $agencies = TravelAgency::paginate(10);
+    }
+    return view('admin.travel_agency', compact('agencies'));
+}
+
+public function searchAgency(Request $request)
+{
+    $query = $request->input('query');
+    $agencies = TravelAgency::where('name', 'like', '%' . $query . '%')
+                    ->orWhere('location', 'like', '%' . $query . '%')
+                    ->orWhere('registration_no', 'like', '%' . $query . '%')
+                    ->orWhere('email', 'like', '%' . $query . '%')
+                    ->paginate(10);
+
+    return view('admin.travel_agency', compact('agencies'));
+}
+
+public function getAgencyDetails($agency_id)
+{  
+    $agency = TravelAgency::findOrFail($agency_id);
+    $guides = TravelAgency::with('travel_guides')->find($agency);
+
+    return view('admin.travel_agency_details', compact('agency','guides'));
+
+}
+
+public function updateAgencyDetails(Request $request, $agency_id)
+{
+    $agency = TravelAgency::find($agency_id);
+    $agency->name = $request->input('name');
+    $agency->email = $request->input('email');
+    $agency->contact_no = $request->input('contact_no');
+    $agency->location = $request->input('location');
+    $agency->registration_no = $request->input('registration_no');
+    $agency->approve = $request->input('approve');
+    $agency->update();
+
+    return redirect()->route('travelAgency', $agency_id)->with('success', "Agency {$agency->name} details updated successfully.");
+}
 
 }

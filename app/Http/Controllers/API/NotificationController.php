@@ -60,8 +60,6 @@ class NotificationController extends Controller
         return redirect()->back()->with('success', 'Notification sent successfully');
 
         }
-
-        
     
 
     public function notifyapp(Request $request)
