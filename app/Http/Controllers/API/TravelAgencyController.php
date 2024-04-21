@@ -24,7 +24,6 @@ class TravelAgencyController extends Controller
                 'agency_image_url'=>'required|mimes:png,jpg,jpeg',
                 'added_by' => 'required',
                 'document_url'=>'required|mimes:png,jpg,jpeg',
-                
             ]);
     
             if ($validator->fails()) {
@@ -99,4 +98,47 @@ class TravelAgencyController extends Controller
                 return response()->json(['success' => false, 'message' => 'Some Error Occured Try Again Later'], 400);
         }
     }
+
+    public function getTravelGuide(){
+
+        
+        $agency = TravelAgency::with('travel_guides')->get();
+                   
+
+        if($agency){
+            return response()->json(['success' => true, 'data' => $agency], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Agency not found'], 404);
+        }
+    }
+
+    public function getAgencyGuide(Request $request){
+        $request->validate([
+            'agency_id' => 'required|integer', 
+        ]);
+    
+        $guide = TravelGuide::where('agency_id', $request->agency_id)
+               ->where('isDeleted', 0)->get();
+        
+        if($guide->isNotEmpty()){
+            return response()->json(['success' => true, 'data' => $guide], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'No guides found'], 404);
+        }
+    }
+    
+    
+    public function deleteGuideById(Request $request, $guide_id){
+        $guide = TravelGuide::find($guide_id);
+        if(!$guide){
+            return response()->json(['success' => false, 'message'=> 'Guide not found'], 404);
+        }
+        
+        $guide->isDeleted = 1;
+        $guide->save();
+        
+        return response()->json(['success' => true, 'message'=> 'Guide Deleted Successfully'], 200);
+    }
+    
+
 }

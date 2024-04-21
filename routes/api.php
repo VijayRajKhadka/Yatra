@@ -54,8 +54,10 @@ Route::controller(EventController::class)->group(function(){
 Route::controller(TravelAgencyController::class)->group(function(){
     Route::post('addAgency','addTravelAgency');
     Route::post('addGuide','addTravelGuide');
-
-    
+    Route::get('travelAgency','getTravelGuide');
+    Route::get('agencyGuide','getAgencyGuide');
+    Route::put('deleteGuide','deleteGuideById');
+     
 });
 
 Route::controller(TrekController::class)->group(function(){
