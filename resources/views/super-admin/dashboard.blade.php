@@ -72,14 +72,47 @@
         </div>
       </div>
       <br/>
-      <div style="width:400px">
+      <div style="width:400px;margin-top:40px">
         <canvas id="barGraph" width="100" height="100"></canvas>
       </div>
-      <div style="width:710px">
-      <canvas id="lineChart"></canvas>
+      <div style="width:710px;margin-top:40px">
+        <canvas id="lineChart"></canvas>
       </div>
-
+      
+      <div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div style="width:410px; margin-top:40px">
+        <canvas id="pieChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="col-md-6" style="margin-top:50px">
+      <div class="row">
+        @if ($usersWithCounts->isNotEmpty())
+          @foreach ($usersWithCounts->take(3) as $user)
+            <div class="col-md-4">
+              <div class="card mb-3">
+                <img src="{{ $user->profile_url }}" class="card-img-top img-thumbnail" alt="Profile Image">
+                <div class="card-body">
+                  <h5 class="card-title">{{ $user->name }}</h5>
+                  <p class="card-text">Total Count: {{ $user->total_count }}</p>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        @else
+          <div class="col">
+            <p>No user found with the most places, treks, and restaurants combined.</p>
+          </div>
+        @endif
+      </div>
+    </div>
   </div>
+</div>
+
+</div>
+
 </div>
 <script>
   
@@ -148,5 +181,43 @@
                 }
             }
         });
+
+      var pieChartData = {!! json_encode($pieChartData) !!};
+
+      var ctx = document.getElementById('pieChart').getContext('2d');
+
+      var myPieChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+              labels: pieChartData.labels,
+              datasets: [{
+                  data: pieChartData.data,
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: {
+                      position: 'top',
+                  },
+                  title: {
+                      display: true,
+                      text: 'Most Reviewed Category: ' + pieChartData.mostReviewedCategory,
+                      fontSize: 16
+                  }
+              }
+          }
+      });
 </script>
 @endsection

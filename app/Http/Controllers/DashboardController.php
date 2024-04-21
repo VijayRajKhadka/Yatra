@@ -46,8 +46,45 @@ class DashboardController extends Controller
         )
             ->groupBy('year', 'month')
             ->get();
+
+
+        $categories = ['Trek', 'Place', 'Restaurant'];
+        $reviewsCount = [$trekReviews, $placeReviews, $restaurantReviews];
+        $mostReviewedCategory = $categories[array_search(max($reviewsCount), $reviewsCount)];
+
+        $pieChartData = [
+            'labels' => $categories,
+            'data' => $reviewsCount,
+            'mostReviewedCategory' => $mostReviewedCategory,
+        ];
+        
+
+        $usersWithCounts = DB::table('users')
+            ->leftJoin('place', function ($join) {
+                $join->on('users.id', '=', 'place.added_by')
+                    ->where('place.approve', '=', 1);
+            })
+            ->leftJoin('trek', function ($join) {
+                $join->on('users.id', '=', 'trek.added_by')
+                    ->where('trek.approve', '=', 1);
+            })
+            ->leftJoin('restaurant', function ($join) {
+                $join->on('users.id', '=', 'restaurant.added_by')
+                    ->where('restaurant.approve', '=', 1);
+            })
+            ->select(
+                'users.id',
+                'users.name',
+                'users.profile_url',
+                DB::raw('COUNT(place.place_id) + COUNT(trek.trek_id) + COUNT(restaurant.restaurant_id) AS total_count')
+            )
+            ->groupBy('users.id', 'users.name', 'users.profile_url')
+            ->orderByDesc('total_count')
+            ->take(3)
+            ->get();
+
         
         return view('super-admin.dashboard', compact('userCount','trekCount','restaurantCount','placeCount', 
-        'totalEvents','totalReviews','totalGuides','barGraphData','userCountsPerMonth'));
+        'totalEvents','totalReviews','totalGuides','barGraphData','userCountsPerMonth','pieChartData','usersWithCounts'));
     }
 }
