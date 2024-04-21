@@ -6,6 +6,7 @@ use App\Models\Place;
 use App\Models\Restaurant;
 
 
+use App\Models\TravelGuide;
 use App\Models\TravelAgency;
 use Illuminate\Http\Request;
 
@@ -207,7 +208,9 @@ public function searchAgency(Request $request)
 public function getAgencyDetails($agency_id)
 {  
     $agency = TravelAgency::findOrFail($agency_id);
-    $guides = TravelAgency::with('travel_guides')->find($agency);
+    $guides = TravelGuide::where('agency_id', $agency_id)
+    ->where('isDeleted', 0)
+    ->get();
 
     return view('admin.travel_agency_details', compact('agency','guides'));
 
@@ -225,6 +228,15 @@ public function updateAgencyDetails(Request $request, $agency_id)
     $agency->update();
 
     return redirect()->route('travelAgency', $agency_id)->with('success', "Agency {$agency->name} details updated successfully.");
+}
+
+
+public function deleteGuide($guide_id){
+    $guide = TravelGuide::find($guide_id);
+    $guide->isDeleted = 1;
+    $guide->save();
+
+    return redirect()->route('agencyDetails', $guide->agency_id)->with('success', "User {$guide->name} is Deleted Succusfully.");
 }
 
 }

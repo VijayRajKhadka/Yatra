@@ -64,27 +64,45 @@
         <tr>
             <th scope="col">Guide ID</th>
             <th scope="col">Name</th>
+            <th scope="col">Profile</th>
             <th scope="col">Contact</th>
-            <th scope="col">Profile URL</th>
             <th scope="col">Experience</th>
-            <th scope="col">Agency ID</th>
-            <th scope="col">Is Deleted</th>
             <th scope="col">Created At</th>
+            <th scope="col">Action</th>
+
         </tr>
     </thead>
     <tbody>
         @foreach($guides as $guide)
         <tr>
             <td>{{ $guide->guide_id }}</td>
+            <td><img src="{{ $guide->profile_url }}" width="100px"/></td>
             <td>{{ $guide->name }}</td>
             <td>{{ $guide->contact }}</td>
-            <td>{{ $guide->profile_url }}</td>
             <td>{{ $guide->experience }}</td>
-            <td>{{ $guide->agency_id }}</td>
-            <td>{{ $guide->isDeleted }}</td>
-            <td>{{ $guide->created_at }}</td>
+            <td>{{ $guide->created_at->format('M d Y') }}</td>
+            <td>
+            <form id="deleteGuide" action="{{ route('deleteGuide', $guide->guide_id ) }}" method="POST" class="row g-3">
+                    @csrf
+                    @method('PUT')
+                    <button type="button" class="btn btn-outline-danger" onclick="confirmDelete('{{ $guide->name}}', '{{ $guide->guide_id  }}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                        </svg>
+                        Delete
+                    </button>
+                    </td>
         </tr>
         @endforeach
     </tbody>
 </table>
 @endsection
+<script>
+    function confirmDelete(username, id) {
+    if (window.confirm(username + " with id " + id + " will be deleted. ARE YOU SURE??")) {
+        var form = document.getElementById('deleteGuide');
+        form.submit();
+    } 
+}
+</script>

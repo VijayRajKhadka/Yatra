@@ -78,7 +78,9 @@ Route::group(['prefix' => 'admin','middleware'=>['web','isAdmin']],function(){
     Route::get('/searchAgency', [AdminController::class, 'searchAgency'])->name('searchAgency');
     Route::get('/agencyDetails/{agency_id}', [AdminController::class, 'getAgencyDetails'])->name('agencyDetails');
     Route::put('/updateAgency/{agency_id}', [AdminController::class, 'updateAgencyDetails'])->name('updateAgencyDetails');
+    Route::put('/deleteGuide/{guide_id}', [AdminController::class, 'deleteGuide'])->name('deleteGuide');
 
+    
     
 
 });
