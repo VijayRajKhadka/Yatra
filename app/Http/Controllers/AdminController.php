@@ -71,6 +71,14 @@ class AdminController extends Controller
         return redirect()->route('adminTrek', $trek_id)->with('success', "Trek {$trek->name} details updated successfully.");
     }
 
+    public function deleteTrek($trek_id){
+        $trek = Trek::find($trek_id);
+        $trek->approve = 3;
+        $trek->save();
+
+    return redirect()->route('adminTrek',0)->with('success', "Trek {$trek->name} is Deleted Succusfully.");
+    }
+
 
 public function place($approve)
 {
@@ -91,8 +99,8 @@ public function place($approve)
     $query = $request->input('query');
     $places = Place::where('name', 'like', '%' . $query . '%')
                     ->orWhere('location', 'like', '%' . $query . '%')
-                    ->orWhere('altitude', 'like', '%' . $query . '%')
-                    ->orWhere('no_of_days', 'like', '%' . $query . '%')
+                    ->orWhere('description', 'like', '%' . $query . '%')
+                    ->orWhere('category', 'like', '%' . $query . '%')
                     ->paginate(10);
 
     return view('admin.place', compact('places'));
@@ -126,6 +134,16 @@ public function place($approve)
 return redirect()->route('adminPlace', $place_id)->with('success', "Place {$place->name} details updated successfully.");
 
 }
+
+public function deletePlace($place_id){
+    $place = Place::find($place_id);
+    $place->approve = 3;
+    $place->save();
+
+return redirect()->route('adminPlace',0)->with('success', "Place {$place->name} is Deleted Succusfully.");
+}
+
+
 
 public function restaurant($approve)
 {
@@ -181,6 +199,14 @@ public function updateRestaurantDetails(Request $request, $restaurant_id)
     return redirect()->route('adminRestaurant', $restaurant_id)->with('success', "Restaurant {$restaurant->name} details updated successfully.");
 }
 
+
+public function deleteRestauarant($restaurant_id){
+    $restaurant = Restaurant::find($restaurant_id);
+    $restaurant->approve = 3;
+    $restaurant->save();
+
+return redirect()->route('adminRestaurant',0)->with('success', "Place {$restaurant->name} is Deleted Succusfully.");
+}
 
 public function travelAgency($approve){
     if ($approve === '0') {

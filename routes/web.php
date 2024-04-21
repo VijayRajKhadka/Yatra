@@ -63,17 +63,24 @@ Route::group(['prefix' => 'admin','middleware'=>['web','isAdmin']],function(){
     Route::get('/trekDetails/{trek_id}',[AdminController::class,'getTrekDetails'])->name('trekDetails');
     Route::put('/updateTrek/{trek_id}',[AdminController::class,'updateTrekDetails'])->name('updateTrekDetails');
     Route::get('/searchTrek', [AdminController::class, 'searchTrek'])->name('searchTrek');
+    Route::put('/deleteTrek/{trek_id}',[AdminController::class,'deleteTrek'])->name('deleteTrek');
 
+    
     Route::get('/place/{approve}', [AdminController::class, 'place'])->name('adminPlace');
     Route::get('/placeDetails/{place_id}',[AdminController::class,'getPlaceDetails'])->name('placeDetails');
     Route::put('/updatePlace/{place_id}',[AdminController::class,'updatePlaceDetails'])->name('updatePlaceDetails');
     Route::get('/searchPlace', [AdminController::class, 'searchPlace'])->name('searchPlace');
+    Route::put('/deletePlace/{place_id}',[AdminController::class,'deletePlace'])->name('deletePlace');
+
+    
 
     Route::get('/restaurant/{approve}', [AdminController::class, 'restaurant'])->name('adminRestaurant');
     Route::get('/restaurantDetails/{restaurant_id}', [AdminController::class, 'getRestaurantDetails'])->name('restaurantDetails');
     Route::put('/updateRestaurant/{restaurant_id}', [AdminController::class, 'updateRestaurantDetails'])->name('updateRestaurantDetails');
     Route::get('/searchRestaurant', [AdminController::class, 'searchRestaurant'])->name('searchRestaurant');
+    Route::put('/deleteRestauarant/{restaurant_id}',[AdminController::class,'deleteRestauarant'])->name('deleteRestauarant');
 
+    
     Route::get('/travelAgency/{appprove}', [AdminController::class, 'travelAgency'])->name('travelAgency');
     Route::get('/searchAgency', [AdminController::class, 'searchAgency'])->name('searchAgency');
     Route::get('/agencyDetails/{agency_id}', [AdminController::class, 'getAgencyDetails'])->name('agencyDetails');

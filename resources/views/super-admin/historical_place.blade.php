@@ -15,6 +15,7 @@
 
 
     function confirmDelete(name, id) {
+        event.preventDefault();
     if (window.confirm(name + " with id " + id + " will be deleted. ARE YOU SURE??")) {
         var form = document.getElementById('deleteHist'); 
         form.submit(); 
