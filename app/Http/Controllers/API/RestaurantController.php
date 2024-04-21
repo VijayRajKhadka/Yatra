@@ -37,6 +37,7 @@ class RestaurantController extends Controller
             'restaurant.name',
             'restaurant.description',
             'restaurant.location',
+            'restaurant.pan',
             'restaurant.category',
             'restaurant.created_at',
             DB::raw('IFNULL(AVG(rf.rating), 1) as avg_rating')
@@ -44,7 +45,8 @@ class RestaurantController extends Controller
         ->leftJoin('restaurant_feedback as rf', 'restaurant.restaurant_id', '=', 'rf.restaurant_id')
         ->with('restaurant_image')
         ->where('restaurant.approve', 1)
-        ->groupBy('restaurant.restaurant_id', 'restaurant.name', 'restaurant.description', 'restaurant.location', 'restaurant.category', 'restaurant.created_at')
+        ->groupBy('restaurant.restaurant_id', 'restaurant.name', 'restaurant.description', 'restaurant.location', 'restaurant.pan',
+        'restaurant.category', 'restaurant.created_at')
         ->orderByDesc('avg_rating');
     
         if($search) {
