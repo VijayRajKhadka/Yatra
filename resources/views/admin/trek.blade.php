@@ -58,7 +58,7 @@
             <td>{{ $trek->altitude }}</td>
             <td>{{ $trek->no_of_days}}</td>
             <td style="{{ $trek->approve == 0 ? 'color: red;' : ($trek->approve == 1 ? 'color: green;' : ($trek->approve == 3 ? 'color: red; text-decoration: line-through;' : '')) }}">
-                {{ $trek->approve == 0 ? 'Pending' : ($trek->approve == 1 ? 'Approved' : $trek->approve? 'Deleted' : $trek->approve) }}
+            {{ $trek->approve == 0 ? 'Pending' : ($trek->approve == 1 ? 'Approved' : ($trek->approve ? 'Deleted' : $trek->approve)) }}
             </td>
 
             <td>{{ $trek->created_at->format('M d Y') }}</td>
