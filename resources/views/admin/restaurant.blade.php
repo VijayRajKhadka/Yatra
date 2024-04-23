@@ -56,9 +56,10 @@
             <td>{{ $restaurant->location }}</td>
             <td>{{ $restaurant->category }}</td>
             <td>{{ $restaurant->open_time }}</td>
-            <td style="{{ $restaurant->approve == 0 ? 'color: red;' : ($restaurant->approve == 1 ? 'color: green;' : '') }}">
-                {{ $restaurant->approve == 0 ? 'Pending' : ($restaurant->approve == 1 ? 'Approved' : $restaurant->approve) }}
+            <td style="{{ $restaurant->approve == 0 ? 'color: red;' : ($restaurant->approve == 1 ? 'color: green;' : ($restaurant->approve == 3 ? 'color: red; text-decoration: line-through;' : '')) }}">
+                {{ $restaurant->approve == 0 ? 'Pending' : ($restaurant->approve == 1 ? 'Approved' : ($restaurant->approve == 3 ? 'Deleted' : $restaurant->approve)) }}
             </td>
+
 
             <td>{{ $restaurant->created_at->format('M d Y') }}</td>
             <td>{{ $restaurant->updated_at->format('M d Y') }}</td>
