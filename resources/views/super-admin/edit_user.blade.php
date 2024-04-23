@@ -45,7 +45,7 @@
                     <select name="role" class="form-select">
                         <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Super Admin</option>
                         <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Admin</option>
-                        <option value="3" {{ $user->role == 3 ? 'selected' : '' }}>User</option>
+                        <option value="0" {{ $user->role == 0 ? 'selected' : '' }}>User</option>
                     </select>
                 </div>
 
