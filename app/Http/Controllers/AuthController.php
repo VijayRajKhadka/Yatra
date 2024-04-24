@@ -18,6 +18,12 @@ class AuthController extends Controller
         return view('register');
     }
 
+    public function loadDashboard()
+    {
+        return view('user.dashboard');
+    }
+
+
     public function register(Request $request)
     {
         $request->validate([
@@ -61,12 +67,6 @@ class AuthController extends Controller
             return back()->with('error','Invalid Username or Password');
         }
     }
-
-    public function loadDashboard()
-    {
-        return view('user.dashboard');
-    }
-
 
     public function redirectDash()
     {

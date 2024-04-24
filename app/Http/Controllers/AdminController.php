@@ -118,22 +118,22 @@ public function place($approve)
     }
 
     public function updatePlaceDetails(Request $request, $place_id)
-{
-    $place = Place::find($place_id);
-    $place->name = $request->input('name');
-    $place->description = $request->input('description');
-    $place->location = $request->input('location');
-    $place->category = $request->input('category');
-    $place->open_time = $request->input('open_time');
-    $place->latitude = $request->input('latitude');
-    $place->longitude = $request->input('longitude');
-    $place->get_there = $request->input('get_there');
-    $place->approve = $request->input('approve');
-    $place->update();
+    {
+        $place = Place::find($place_id);
+        $place->name = $request->input('name');
+        $place->description = $request->input('description');
+        $place->location = $request->input('location');
+        $place->category = $request->input('category');
+        $place->open_time = $request->input('open_time');
+        $place->latitude = $request->input('latitude');
+        $place->longitude = $request->input('longitude');
+        $place->get_there = $request->input('get_there');
+        $place->approve = $request->input('approve');
+        $place->update();
 
-return redirect()->route('adminPlace', $place_id)->with('success', "Place {$place->name} details updated successfully.");
+        return redirect()->route('adminPlace', $place_id)->with('success', "Place {$place->name} details updated successfully.");
 
-}
+    }
 
 public function deletePlace($place_id){
     $place = Place::find($place_id);

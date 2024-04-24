@@ -111,6 +111,7 @@ class TravelAgencyController extends Controller
             return response()->json(['success' => false, 'message' => 'Agency not found'], 404);
         }
     }
+    
 
     public function getAgencyGuide(Request $request){
         $request->validate([
