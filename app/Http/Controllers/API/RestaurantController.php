@@ -90,27 +90,46 @@ class RestaurantController extends Controller
         }
     }
 
-    public function addRestaurantFeedback(Request $request){
+    public function addRestaurantFeedback(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
             'restaurant_id' => 'required',
             'review' => 'required_without:rating',
             'rating' => 'required_without:review',
         ]);
+
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()], 400);
         }
+
         $input = $request->all();
+
+        if (isset($input['rating'])) {
+            $existingRating = RestaurantFeedback::where('user_id', $input['user_id'])
+                                                ->where('restaurant_id', $input['restaurant_id'])
+                                                ->whereNotNull('rating')
+                                                ->first();
+
+            if ($existingRating) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You have already provided the rating.'
+                ], 400);
+            }
+        }
 
         $newRestaurantFeedback = RestaurantFeedback::create($input);
 
         $response = [
             'success' => true,
             'data' => $newRestaurantFeedback,
-            'message' => 'Place Feedback Added Successfully'
+            'message' => 'Restaurant Feedback Added Successfully'
         ];
+
         return response()->json($response, 200);
     }
+
 
     public function addRestaurant(Request $request){
         try{

@@ -73,17 +73,34 @@ class PlaceController extends Controller
         return response()->json(['success' => true, 'data' => $places], 200);
     }
     
-    public function addPlaceFeedback(Request $request){
+    public function addPlaceFeedback(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
             'place_id' => 'required',
             'review' => 'required_without:rating',
             'rating' => 'required_without:review',
         ]);
+
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()], 400);
         }
+
         $input = $request->all();
+
+        if (isset($input['rating'])) {
+            $existingRating = PlaceFeedback::where('user_id', $input['user_id'])
+                                        ->where('place_id', $input['place_id'])
+                                        ->whereNotNull('rating')
+                                        ->first();
+
+            if ($existingRating) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You have already provided the rating.'
+                ], 400);
+            }
+        }
 
         $newPlaceFeedback = PlaceFeedback::create($input);
 
@@ -92,6 +109,7 @@ class PlaceController extends Controller
             'data' => $newPlaceFeedback,
             'message' => 'Place Feedback Added Successfully'
         ];
+
         return response()->json($response, 200);
     }
 
