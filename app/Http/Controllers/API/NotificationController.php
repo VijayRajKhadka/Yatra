@@ -15,7 +15,7 @@ class NotificationController extends Controller
         $serverKey = 'AAAAqZsncns:APA91bEtEYALvbocWxbrExl1LJ9NxcvbxzwZCXNDnPg-WTAGelQYSGsYqCH3X2QWYbhnXAT_q0einPhzqy59kdTWJ_5qu-QMjyiJp1BUeQKIu08XjPMDvwB-DTZVSHil1u1B6dgH-YUG';
         //$serverKey =  env('NOTIFICATION_KEY','sync');
         $device_key=['cK6nkjTJTt2GJXUKSG0jsC:APA91bHYOWA7-3etiQvtvrh9A70btL9JpblrmGgeivLmGL9xSVVtVr4IlpV-SNkjfUYrWezAd3qMtLDd6di5Y47d35R4is-umf_GLzXbkQlVc2b_CsSK66eIXELr4hjmht9_5JQR-_lI',
-            'eyRo4NXGSw2442srLoRlrb:APA91bEw4xb7eMWz25GuUJa3jb4Goi848UnRs4Wucu0V_f_NhSNSKGfu2nDtT-jFARLq-RX2-72xgrQf6rz_OPbA-gxJscHCzKzPYpaIPU5fkwzw7zmfApzhQY4z6IqLnVioJ9Fh24Yd'];
+            'eM-_42dPTBmnFLmAYsfeuS:APA91bGPiPaXub6A2JYVMWuAFeRgtBYktGsam6FV0SwIuxtGbN00tZRvUTarHTtxTE78Mv8NP7xiJ0g5K5UKfxhJcsVq7h26QEm4GyPjv3zywD6X7a6yqSg25Avmlg6HKu2sA37CW9-c'];
         
         $dataArr = [
             "click_action" => "FLUTTER_NOTIFICATION_CLICK",
