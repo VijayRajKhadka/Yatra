@@ -30,6 +30,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post("notification",[NotificationController::class, 'notifyapp'])->name('send.notification');
+Route::post("saveToken",[NotificationController::class, 'storetoken']);
+
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('login','login');

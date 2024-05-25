@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Env;
+use App\Models\NotificationToken;
 
 class NotificationController extends Controller
 {
@@ -72,6 +73,17 @@ class NotificationController extends Controller
         $body = $request->input('body');
 
         return $this->notify($request->title, $request->body,);
+    }
+
+
+    public function storetoken(Request $request){
+        $token = $request->input('token');
+
+        $notificationToken = new NotificationToken();
+        $notificationToken->token = $token;
+        $notificationToken->save();
+
+        return response()->json(['success' => true, 'message' => 'Token stored successfully']);
     }
 }
 
