@@ -12,6 +12,7 @@ use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TravelAgencyController;
+use App\Http\Controllers\HistoricalPlaceController;
 use App\Http\Controllers\API\TopUserController;
 /*
 |--------------------------------------------------------------------------
