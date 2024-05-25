@@ -21,7 +21,8 @@ class NotificationController extends Controller
             "click_action" => "FLUTTER_NOTIFICATION_CLICK",
             "status" => "done"
         ];
-
+        
+        $result=false;
         foreach ($device_key as $deviceKey) {
         $data = [
             "to" => $deviceKey,
@@ -50,6 +51,9 @@ class NotificationController extends Controller
 
         $result = curl_exec($ch);
 
+        curl_close($ch);
+
+        }
         if ($result === FALSE) {
             return [
                 'success' => false,
@@ -58,10 +62,8 @@ class NotificationController extends Controller
             ];
         } 
 
-        curl_close($ch);
         return redirect()->back()->with('success', 'Notification sent successfully');
 
-        }
     }
 
     public function notifyapp(Request $request)
