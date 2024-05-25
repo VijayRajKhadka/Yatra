@@ -15,7 +15,7 @@ class NotificationController extends Controller
 
         $serverKey = 'AAAAqZsncns:APA91bEtEYALvbocWxbrExl1LJ9NxcvbxzwZCXNDnPg-WTAGelQYSGsYqCH3X2QWYbhnXAT_q0einPhzqy59kdTWJ_5qu-QMjyiJp1BUeQKIu08XjPMDvwB-DTZVSHil1u1B6dgH-YUG';
         //$serverKey =  env('NOTIFICATION_KEY','sync');
-        
+
         $deviceKeys = NotificationToken::distinct()->pluck('token')->toArray();
 
         $dataArr = [
@@ -24,7 +24,7 @@ class NotificationController extends Controller
         ];
 
         $result=false;
-        foreach ($device_key as $deviceKey) {
+        foreach ($deviceKeys as $deviceKey) {
         $data = [
             "to" => $deviceKey,
             "notification" => [
