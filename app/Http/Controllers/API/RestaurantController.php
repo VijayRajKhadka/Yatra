@@ -80,6 +80,7 @@ class RestaurantController extends Controller
         $restaurantId = $request->input('restaurant');
         $reviews = RestaurantFeedback::with('user:id,name,profile_url')
             ->where('restaurant_id', $restaurantId)
+            ->orderBy('created_at', 'desc')
             ->whereNotNull('review')
             ->paginate(7);
 
