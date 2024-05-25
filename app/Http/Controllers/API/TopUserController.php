@@ -27,9 +27,13 @@ class TopUserController extends Controller
             'users.id',
             'users.name',
             'users.profile_url',
-            DB::raw('COUNT(place.place_id) + COUNT(trek.trek_id) + COUNT(restaurant.restaurant_id) AS total_count')
+            'users.created_at',
+            DB::raw('COUNT(DISTINCT place.place_id) AS place_count'),
+            DB::raw('COUNT(DISTINCT trek.trek_id) AS trek_count'),
+            DB::raw('COUNT(DISTINCT restaurant.restaurant_id) AS restaurant_count'),
+            DB::raw('COUNT(DISTINCT place.place_id) + COUNT(DISTINCT trek.trek_id) + COUNT(DISTINCT restaurant.restaurant_id) AS total_count')
         )
-        ->groupBy('users.id', 'users.name', 'users.profile_url')
+        ->groupBy('users.id', 'users.name', 'users.profile_url', 'users.created_at')
         ->orderByDesc('total_count')
         ->take(20)
         ->get();
@@ -38,3 +42,4 @@ class TopUserController extends Controller
 
     }
 }
+
