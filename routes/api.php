@@ -12,7 +12,7 @@ use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TravelAgencyController;
-use App\Http\Controllers\HistoricalPlaceController;
+use App\Http\Controllers\API\TopUserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -91,5 +91,10 @@ Route::controller(RestaurantController::class)->group(function(){
 
 Route::controller(HistoricalPlaceController::class)->group(function(){
     Route::get('historicalPlace','getHistoricalPlaces');
+});
+
+
+Route::controller(TopUserController::class)->group(function(){
+    Route::get('topContributers','getTopUsers');
 });
 

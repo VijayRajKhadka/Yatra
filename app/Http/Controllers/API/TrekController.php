@@ -42,17 +42,33 @@ class TrekController extends Controller
         }
     }
 
-    public function addTrekFeedback(Request $request){
+
+
+    public function addTrekFeedback(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
             'trek_id' => 'required',
             'review' => 'required_without:rating',
             'rating' => 'required_without:review',
         ]);
+
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()], 400);
         }
+
         $input = $request->all();
+
+        $existingFeedback = TrekFeedback::where('user_id', $input['user_id'])
+                                        ->where('trek_id', $input['trek_id'])
+                                        ->first();
+
+        if ($existingFeedback) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You have already rated this trek.'
+            ], 400);
+        }
 
         $newTrekFeedback = TrekFeedback::create($input);
 
@@ -61,8 +77,11 @@ class TrekController extends Controller
             'data' => $newTrekFeedback,
             'message' => 'Trek Feedback Added Successfully'
         ];
+
         return response()->json($response, 200);
     }
+
+
 
     public function getTrekDetails(Request $request){
         $search = $request->query('search');
